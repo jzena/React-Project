@@ -7,12 +7,15 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "history": "^4.6.0",
     "mobx": "^2.5.0",
     "mobx-react": "^3.5.5",
     "mobx-react-devtools": "^4.2.5",
     "react": "^15.3.1",
     "react-bootstrap": "^0.30.8",
-    "react-dom": "^15.3.1"
+    "react-dom": "^15.3.1",
+    "react-history": "^0.18.2",
+    "react-router": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
