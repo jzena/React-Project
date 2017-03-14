@@ -13,8 +13,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 const direcciones = (
   <Router history={browserHistory} >
     <Route path="/" component={Lienzo}>
-      {/*<IndexRoute component={Platillos} ></IndexRoute>*/}
-      {/*<Route path="bebidas" component={Bebidas}></Route>*/}
+      {<IndexRoute component={Platillos} ></IndexRoute>}
+      {<Route path="bebidas" component={Bebidas}></Route>}
     </Route>
   </Router>
 );
