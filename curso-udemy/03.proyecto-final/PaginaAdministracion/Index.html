@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Página Administración</title>
+    <!--Para evitar errores con acentos o títulos-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <h2>Página de Administración</h2>
+        </div>
+        <ul class="nav nav-pills">
+            <li role="presentation" class="active">
+                <a href="platillos.html">Platillos</a>
+            </li>
+        </ul>
+
+        <!--Subir una imagen de cada platillo-->
+        <div>
+            <input type="file" name "imagen" onchange="visualizarArchivo()" /><br/>
+            <img src="" height="300" alt="Imagen de platillo" id="imgPlatillo">
+        </div>
+
+        <!--Forma que no spermita ingresra el nombre, descripción y precio de cada platillo-->
+        <div>
+            <form onsubmit="funcionDeLaForma()">
+                <p>
+                    nombre: <input class="form-control" type="text" name="nombre" id="nombre" required>
+                </p>
+                <p> Descripción: <textarea class="form-control" id="descripcion" required></textarea> </p>
+                <p>
+                    Precio: <input class="form-control" type="text" name="precio" id="precio" required>
+                </p>
+                <p>
+                    Direccion de la imagen:<input class="form-control" type="text" name="direccion" id="imgDir" required>
+                </p>
+                <input class="btn btn-success" type="submit" value="Subir">
+            </form>
+        </div>
+
+    </div>
+</body>
+
+
+<script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
+<script type="text/javascript" src="index.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/1.0.5/bootstrap-native.min.js"></script>
+
+</html>

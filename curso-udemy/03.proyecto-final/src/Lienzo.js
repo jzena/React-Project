@@ -13,8 +13,8 @@ class Lienzo extends Component {
                 </div>
                 <div>
                     <ul className="nav nav-pills ListMargin">
-                        <li role="presentation" className="active">Comidas</li>
-                        <li role="presentation" className="active">Bebidas</li>
+                        <li role="presentation" className="active"><Link to="/">Comidas</Link></li>
+                        <li role="presentation" className="active"><Link to="bebidas">Bebidas</Link></li>
                     </ul>
                 </div>
                 {this.props.children}

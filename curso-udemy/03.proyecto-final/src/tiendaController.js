@@ -10,11 +10,11 @@ class TiendaController {
                 },
                 {
                     nombre: "segundoPlatillo2",
-                    descripcion: "Platillo muy rico", precio: 100, cantidad: 0
+                    descripcion: "Platillo muy rico", precio: 150, cantidad: 0
                 },
                 {
                     nombre: "tercerPlatillo",
-                    descripcion: "Platillo muy rico", precio: 100, cantidad: 0
+                    descripcion: "Platillo muy rico", precio: 200, cantidad: 0
                 }],
             bebidas: [
                 {
