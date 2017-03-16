@@ -1,40 +1,32 @@
 import { extendObservable } from 'mobx';
+import datos from './fireBaseController';
 
 class TiendaController {
     constructor() {
+
+        self = this;
+
+        datos.bebidas.once('value').then(function (snapshot) {
+            //console.log(snapshot);
+            snapshot.forEach(function (childSnapshot) {
+                const key = childSnapshot.key;
+                const valor = childSnapshot.val();
+                self.bebidas.push(valor);
+            })
+        });
+
+        datos.platillos.once('value').then(function (snapshot) {
+            //console.log(snapshot);
+            snapshot.forEach(function (childSnapshot) {
+                const key = childSnapshot.key;
+                const valor = childSnapshot.val();
+                self.platillos.push(valor);
+            })
+        });
+
         extendObservable(this, {
-            platillos: [
-                {
-                    nombre: 'primerPlatillo',
-                    descripcion: "Platillo muy rico", precio: 100, cantidad: 0
-                },
-                {
-                    nombre: "segundoPlatillo2",
-                    descripcion: "Platillo muy rico", precio: 150, cantidad: 0
-                },
-                {
-                    nombre: "tercerPlatillo",
-                    descripcion: "Platillo muy rico", precio: 200, cantidad: 0
-                }],
-            bebidas: [
-                {
-                    nombre: 'primerBebida',
-                    descripcion: 'bebida muy rica',
-                    precio: 20,
-                    cantidad: 0
-                },
-                {
-                    nombre: 'segundaBebida',
-                    descripcion: 'bebida muy rica',
-                    precio: 30,
-                    cantidad: 0
-                },
-                {
-                    nombre: 'tercerBebida',
-                    descripcion: 'bebida muy rica',
-                    precio: 40,
-                    cantidad: 0
-                }]
+            platillos: [],
+            bebidas: []
         });
     }
 
@@ -46,7 +38,7 @@ class TiendaController {
         }
         )
     }
-    
+
     bebidasEnLaOrden(indicePlatillo, cantidadPlatillo) {
         this.bebidas.forEach((value, index) => {
             if (indicePlatillo === index) {
