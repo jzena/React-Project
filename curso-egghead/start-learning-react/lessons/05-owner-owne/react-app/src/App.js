@@ -19,12 +19,11 @@ class App extends React.Component {
                 <h1>{this.state.txt}</h1>
                 <Widget update = {this.update} />
                 <Widget update = {this.update} />
-                <Widget update = {this.update} />
+                <Widget update = {this.update} />               
             </div>
         );
     }
 }
 
 const Widget = (props) => <input type="text" onChange={props.update} />
-
 export default App;

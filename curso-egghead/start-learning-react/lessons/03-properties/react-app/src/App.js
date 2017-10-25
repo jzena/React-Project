@@ -9,7 +9,7 @@ class App extends React.Component {
     }
 }
  
-App.prototypes = {
+App.propTypes = {
     txt: PropTypes.string,
     cats: PropTypes.number.isRequired,
 }
