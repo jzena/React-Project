@@ -1,146 +1,153 @@
 // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyB6QQxPjS2BJ9gq2bRSgA4qrHlM9jF0k2k",
-    authDomain: "administracion-17f39.firebaseapp.com",
-    databaseURL: "https://administracion-17f39.firebaseio.com",
-    storageBucket: "administracion-17f39.appspot.com",
-    messagingSenderId: "15326671545"
-  };
-  firebase.initializeApp(config);
+var config = {
+	apiKey: "AIzaSyB6QQxPjS2BJ9gq2bRSgA4qrHlM9jF0k2k",
+	authDomain: "administracion-17f39.firebaseapp.com",
+	databaseURL: "https://administracion-17f39.firebaseio.com",
+	storageBucket: "administracion-17f39.appspot.com",
+	messagingSenderId: "15326671545"
+};
+firebase.initializeApp(config);
 
 // 0. Autenticar
-var ingresar = function(){
+var ingresar = function () {
 	var email = document.getElementById("correo").value;
 	var password = document.getElementById("contrasena").value;
 
 
 	firebase.auth().signInWithEmailAndPassword(email, password)
-	.then(function(){
-		console.log("Ingresaste correctamente");
-		window.location = "agregarPlatillo.html";
-	})
-	.catch(function(error) {
-	  // Handle Errors here.
-	  var errorCode = error.code;
-	  var errorMessage = error.message;
-	  console.log("Error en la autenticación: " + errorCode + " " + errorMessage);
-	  // ...
-	});
+		.then(function () {
+			console.log("Ingresaste correctamente");
+			window.location = "agregarPlatillo.html";
+		})
+		.catch(function (error) {
+			// Handle Errors here.
+			var errorCode = error.code;
+			var errorMessage = error.message;
+			console.log("Error en la autenticación: " + errorCode + " " + errorMessage);
+			// ...
+		});
 }
 
 // Observador de el estado de atenticación
 
-firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    // User is signed in.
-    console.log("Si está autorizado");
+firebase.auth().onAuthStateChanged(function (user) {
+	if (user) {
+		// User is signed in.
+		console.log("Si está autorizado");
 
-  } else {
-    // No user is signed in.
-    console.log("No está autorizado");
-    if(window.location.pathname !== "/index.html"){
-    	window.location = "index.html";
-    }
-  }
+	} else {
+		// No user is signed in.
+		console.log("No está autorizado");
+		console.log(window.location.pathname);
+		if (window.location.pathname !== "/PaginaAdministracion/index.html") {
+			window.location = "/PaginaAdministracion/index.html";
+		}
+	}
 });
 
-var salir = function(){
+var salir = function () {
 
-    firebase.auth().signOut().then(function() {
-	  // Sign-out successful.
-	 console.log("Sesión terminada");
-	}, function(error) {
-	  // An error happened.
-	  console.log("Error en terminar la sesión: " + error);
+	firebase.auth().signOut().then(function () {
+		// Sign-out successful.
+		console.log("Sesión terminada");
+	}, function (error) {
+		// An error happened.
+		console.log("Error en terminar la sesión: " + error);
 	});
-	
+
 }
 
 
 
- // 1. Crear platillos
+// 1. Crear platillos
 
- var database = firebase.database();
+var database = firebase.database();
 
- var escribirPlatillo = function(pNombre, pDescripcion, pPrecio, pDireccion){
- 	
- 	database.ref('alimentos/').push({nombre: pNombre,
- 		descripcion: pDescripcion,
- 		precio: pPrecio,
- 		cantidad: 0,
- 		direccion: pDireccion
- 	}).then(function(){
- 		alert("Se agregó el platillo");
- 		window.location = "agregarPlatillo.html";
- 	})
- 	.catch(function(error){
- 		alert("No se agregó el platillo: " + error);
- 	});
- }
+var escribirPlatillo = function (pNombre, pDescripcion, pPrecio, pDireccion) {
 
-
- // 2. Leer nuestros platillos
-
-var imprimirPlatillos = function(){
-	 var query = database.ref('alimentos/');
-	 query.on('value', function(snapshot){
-	 	var ul = document.getElementById("lista");
-	 	//console.log(snapshot.val());
-	 	snapshot.forEach(function(childSnapshot){
-	 		console.log(childSnapshot.key);
-	 		console.log(childSnapshot.val());
-
-	 		var childKey = childSnapshot.key;
-	 		var childData = childSnapshot.val();
-
-	 		var li = document.createElement("li");
-	 		var div = document.createElement("div");
-	 		var img = document.createElement("img");
-	 		//var br = document.createElement("br");
-	 		var button = document.createElement("button");
-
-	 		button.setAttribute("id", childKey);
-	 		button.setAttribute("class", "btn btn-danger");
-	 		button.setAttribute("onclick", "eliminarPlatillos(this.id)");
-	 		button.appendChild(document.createTextNode("Eliminar platillo"));
-
-	 		img.src = childData.direccion;
-	 		img.height = 60;
-	 		img.alt = "Imagen del platillo";
-
-	 		div.appendChild(img);
-	 		div.style.float = "right";
-	 		li.setAttribute("class", "list-group-item");
-	 		li.appendChild(div);
-	 		li.appendChild(document.createTextNode("Nombre: " + childData.nombre));
-	 		li.appendChild(document.createElement("br"));
-	 		li.appendChild(document.createTextNode("Descripcion: " + childData.descripcion));
-	 		li.appendChild(document.createElement("br"));
-	 		li.appendChild(document.createTextNode("Precio: " + childData.precio));
-	 		li.appendChild(document.createElement("br"));
-	 		li.appendChild(button);
-
-
-	 		ul.appendChild(li);
-
-	 	})
-	 })
+	database.ref('alimentos/').push({
+		nombre: pNombre,
+		descripcion: pDescripcion,
+		precio: pPrecio,
+		cantidad: 0,
+		direccion: pDireccion
+	}).then(function () {
+		alert("Se agregó el platillo");
+		window.location = "agregarPlatillo.html";
+	})
+		.catch(function (error) {
+			alert("No se agregó el platillo: " + error);
+		});
 }
- // 3. Eliminar nuestros platillos
 
- var eliminarPlatillos = function(id){
- 	database.ref('alimentos/' + id).remove()
- 	.then(function(){
- 		alert("Se eliminó el platillo");
- 		console.log("Se eliminó el platillo");
- 		window.location = "platillos.html";
- 	})
- 	.catch(function(error){
- 		console.log("No se borró el platillo: " + error);
- 	})
- }
 
-function funcionDeLaForma(event){
+// 2. Leer nuestros platillos
+
+var imprimirPlatillos = function () {
+	var query = database.ref('alimentos/');
+	query.once('value', function (snapshot) {
+		var ul = document.getElementById("lista");
+		//console.log(snapshot.val());
+		snapshot.forEach(function (childSnapshot) {
+			console.log(childSnapshot.key);
+			console.log(childSnapshot.val());
+
+			var childKey = childSnapshot.key;
+			var childData = childSnapshot.val();
+
+			var li = document.createElement("li");
+			var div = document.createElement("div");
+			var img = document.createElement("img");
+			//var br = document.createElement("br");
+			var button = document.createElement("button");
+
+			button.setAttribute("id", childKey);
+			button.setAttribute("class", "btn btn-danger");
+			button.setAttribute("onclick", "eliminarPlatillos(this.id)");
+			button.appendChild(document.createTextNode("Eliminar platillo"));
+
+			img.src = childData.direccion;
+			img.height = 60;
+			img.alt = "Imagen del platillo";
+
+			div.appendChild(img);
+			div.style.float = "right";
+			li.setAttribute("class", "list-group-item");
+			li.setAttribute("id", "'" + childKey + "'");
+			li.appendChild(div);
+			li.appendChild(document.createTextNode("Nombre: " + childData.nombre));
+			li.appendChild(document.createElement("br"));
+			li.appendChild(document.createTextNode("Descripcion: " + childData.descripcion));
+			li.appendChild(document.createElement("br"));
+			li.appendChild(document.createTextNode("Precio: " + childData.precio));
+			li.appendChild(document.createElement("br"));
+			li.appendChild(button);
+
+
+			ul.appendChild(li);
+
+		})
+	})
+}
+// 3. Eliminar nuestros platillos
+
+var eliminarPlatillos = function (id) {
+	database.ref('alimentos/' + id).remove()
+		.then(function () {
+			alert("Se eliminó el platillo");
+			console.log("Se eliminó el platillo");
+			var ul = document.getElementById("lista");
+			var li = document.getElementById("'" + id + "'");
+			ul.removeChild(li);
+
+			//window.location = "platillos.html";
+		})
+		.catch(function (error) {
+			console.log("No se borró el platillo: " + error);
+		})
+}
+
+function funcionDeLaForma(event) {
 	event.preventDefault();
 	var nombre = document.getElementById("nombre").value;
 	var descripcion = document.getElementById("descripcion").value;
@@ -150,8 +157,8 @@ function funcionDeLaForma(event){
 	//alert(nombre + descripcion + precio);
 
 
-		escribirPlatillo(nombre, descripcion, precio, imagen);
-		//alert("se agregó un nuevo platillo");
+	escribirPlatillo(nombre, descripcion, precio, imagen);
+	//alert("se agregó un nuevo platillo");
 
 
 	return false;
@@ -163,31 +170,31 @@ function funcionDeLaForma(event){
 var storage = firebase.storage();
 var storageRef = storage.ref();
 
-function visualizarArchivo(){
+function visualizarArchivo() {
 	var preview = document.querySelector('img');
 	var archivo = document.querySelector('input[type=file]').files[0];
 	var lector = new FileReader();
 
-	lector.onloadend = function(){
-		preview.src=lector.result;
+	lector.onloadend = function () {
+		preview.src = lector.result;
 	}
 
-	if(archivo){
+	if (archivo) {
 		lector.readAsDataURL(archivo);
 
 		var subirImagen = storageRef.child('platillos/' + archivo.name).put(archivo);
 
-		subirImagen.on('state_changed', function(snapshot){
+		subirImagen.on('state_changed', function (snapshot) {
 			//Los cambios en la carga de nuestro archivo
-		}, function(error){
+		}, function (error) {
 			console.log("Error en la carga de la imagen: " + error)
-		}, function(){
+		}, function () {
 			console.log(subirImagen.snapshot.downloadURL);
 			document.getElementById("imgDir").value = subirImagen.snapshot.downloadURL;
 		})
 	}
-	else{
-		preview.src="";
+	else {
+		preview.src = "";
 	}
 }
 
@@ -196,37 +203,37 @@ function visualizarArchivo(){
 
 // Imagen
 
-function visualizarArchivoBebidas(){
+function visualizarArchivoBebidas() {
 	var preview = document.querySelector('img');
 	var archivo = document.querySelector('input[type=file]').files[0];
 	var lector = new FileReader();
 
-	lector.onloadend = function(){
-		preview.src=lector.result;
+	lector.onloadend = function () {
+		preview.src = lector.result;
 	}
 
-	if(archivo){
+	if (archivo) {
 		lector.readAsDataURL(archivo);
 
 		var subirImagen = storageRef.child('bebidas/' + archivo.name).put(archivo);
 
-		subirImagen.on('state_changed', function(snapshot){
+		subirImagen.on('state_changed', function (snapshot) {
 			//Los cambios en la carga de nuestro archivo
-		}, function(error){
+		}, function (error) {
 			console.log("Error en la carga de la imagen: " + error)
-		}, function(){
+		}, function () {
 			console.log(subirImagen.snapshot.downloadURL);
 			document.getElementById("imgDir").value = subirImagen.snapshot.downloadURL;
 		})
 	}
-	else{
-		preview.src="";
+	else {
+		preview.src = "";
 	}
 }
 
 // Forma
 
-function funcionDeLaFormaBebidas(event){
+function funcionDeLaFormaBebidas(event) {
 	event.preventDefault();
 	var nombre = document.getElementById("nombre").value;
 	var descripcion = document.getElementById("descripcion").value;
@@ -236,8 +243,8 @@ function funcionDeLaFormaBebidas(event){
 	//alert(nombre + descripcion + precio);
 
 
-		escribirBebida(nombre, descripcion, precio, imagen);
-		//alert("se agregó un nuevo platillo");
+	escribirBebida(nombre, descripcion, precio, imagen);
+	//alert("se agregó un nuevo platillo");
 
 
 	return false;
@@ -245,83 +252,84 @@ function funcionDeLaFormaBebidas(event){
 
 // Escribir bebida
 
- var escribirBebida = function(pNombre, pDescripcion, pPrecio, pDireccion){
- 	
- 	database.ref('bebidas/').push({nombre: pNombre,
- 		descripcion: pDescripcion,
- 		precio: pPrecio,
- 		cantidad: 0,
- 		direccion: pDireccion
- 	}).then(function(){
- 		alert("Se agregó bebida");
- 		window.location = "agregarBebida.html";
- 	})
- 	.catch(function(error){
- 		alert("No se agregó el platillo: " + error);
- 	});
- }
+var escribirBebida = function (pNombre, pDescripcion, pPrecio, pDireccion) {
+
+	database.ref('bebidas/').push({
+		nombre: pNombre,
+		descripcion: pDescripcion,
+		precio: pPrecio,
+		cantidad: 0,
+		direccion: pDireccion
+	}).then(function () {
+		alert("Se agregó bebida");
+		window.location = "agregarBebida.html";
+	})
+		.catch(function (error) {
+			alert("No se agregó el platillo: " + error);
+		});
+}
 
 // Imprimir Bebidas
 
-var imprimirBebidas = function(){
-	 var query = database.ref('bebidas/');
-	 query.on('value', function(snapshot){
-	 	var ul = document.getElementById("lista");
-	 	//console.log(snapshot.val());
-	 	snapshot.forEach(function(childSnapshot){
-	 		console.log(childSnapshot.key);
-	 		console.log(childSnapshot.val());
+var imprimirBebidas = function () {
+	var query = database.ref('bebidas/');
+	query.on('value', function (snapshot) {
+		var ul = document.getElementById("lista");
+		//console.log(snapshot.val());
+		snapshot.forEach(function (childSnapshot) {
+			console.log(childSnapshot.key);
+			console.log(childSnapshot.val());
 
-	 		var childKey = childSnapshot.key;
-	 		var childData = childSnapshot.val();
+			var childKey = childSnapshot.key;
+			var childData = childSnapshot.val();
 
-	 		var li = document.createElement("li");
-	 		var div = document.createElement("div");
-	 		var img = document.createElement("img");
-	 		//var br = document.createElement("br");
-	 		var button = document.createElement("button");
+			var li = document.createElement("li");
+			var div = document.createElement("div");
+			var img = document.createElement("img");
+			//var br = document.createElement("br");
+			var button = document.createElement("button");
 
-	 		button.setAttribute("id", childKey);
-	 		button.setAttribute("class", "btn btn-danger");
-	 		button.setAttribute("onclick", "eliminarBebidas(this.id)");
-	 		button.appendChild(document.createTextNode("Eliminar bebida"));
+			button.setAttribute("id", childKey);
+			button.setAttribute("class", "btn btn-danger");
+			button.setAttribute("onclick", "eliminarBebidas(this.id)");
+			button.appendChild(document.createTextNode("Eliminar bebida"));
 
-	 		img.src = childData.direccion;
-	 		img.height = 60;
-	 		img.alt = "Imagen del platillo";
+			img.src = childData.direccion;
+			img.height = 60;
+			img.alt = "Imagen del platillo";
 
-	 		div.appendChild(img);
-	 		div.style.float = "right";
-	 		li.setAttribute("class", "list-group-item");
-	 		li.appendChild(div);
-	 		li.appendChild(document.createTextNode("Nombre: " + childData.nombre));
-	 		li.appendChild(document.createElement("br"));
-	 		li.appendChild(document.createTextNode("Descripcion: " + childData.descripcion));
-	 		li.appendChild(document.createElement("br"));
-	 		li.appendChild(document.createTextNode("Precio: " + childData.precio));
-	 		li.appendChild(document.createElement("br"));
-	 		li.appendChild(button);
+			div.appendChild(img);
+			div.style.float = "right";
+			li.setAttribute("class", "list-group-item");
+			li.appendChild(div);
+			li.appendChild(document.createTextNode("Nombre: " + childData.nombre));
+			li.appendChild(document.createElement("br"));
+			li.appendChild(document.createTextNode("Descripcion: " + childData.descripcion));
+			li.appendChild(document.createElement("br"));
+			li.appendChild(document.createTextNode("Precio: " + childData.precio));
+			li.appendChild(document.createElement("br"));
+			li.appendChild(button);
 
 
-	 		ul.appendChild(li);
+			ul.appendChild(li);
 
-	 	})
-	 })
+		})
+	})
 }
 
 // ELiminar Bebidas
 
- var eliminarBebidas = function(id){
- 	database.ref('bebidas/' + id).remove()
- 	.then(function(){
- 		alert("Se eliminó bebida");
- 		console.log("Se eliminó bebida");
- 		window.location = "bebidas.html";
- 	})
- 	.catch(function(error){
- 		console.log("No se borró la bebida: " + error);
- 	})
- }
+var eliminarBebidas = function (id) {
+	database.ref('bebidas/' + id).remove()
+		.then(function () {
+			alert("Se eliminó bebida");
+			console.log("Se eliminó bebida");
+			window.location = "bebidas.html";
+		})
+		.catch(function (error) {
+			console.log("No se borró la bebida: " + error);
+		})
+}
 
 
 
