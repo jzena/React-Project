@@ -1,6 +1,6 @@
 # Redux -- Counter
 
-///html
+```html
     <div>
         Valor:
         <span id="numero"></span>
@@ -8,9 +8,9 @@
         <button id="aum" onclick="aumentar()">Aumentar</button>
         <button id="dis" onclick="disminuir()">Disminuir</button>
     </div>
-///
+```
 
-///js
+```js
 
         // REDUX GAME
         var self = this;
@@ -78,4 +78,4 @@
 
         store.subscribe(mostrarNumero);
 
-///
+```
