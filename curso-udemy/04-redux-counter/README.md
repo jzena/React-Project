@@ -1,5 +1,6 @@
 # Redux -- Counter
 
+## Html code
 ```html
     <div>
         Valor:
@@ -10,6 +11,7 @@
     </div>
 ```
 
+## Javascript code
 ```js
 
         // REDUX GAME
