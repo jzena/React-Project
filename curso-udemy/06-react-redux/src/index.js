@@ -7,5 +7,20 @@ import registerServiceWorker from './registerServiceWorker';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const reducer = (state, action) => {
+    return state;
+}
+
+const state = {
+    cantidad: 2
+}
+
+const store = createStore(reducer, state);
+
+ReactDOM.render(
+    // I. Implementar el PROVIDER
+    <Provider store={store}>
+        <App />
+    </Provider>
+    , document.getElementById('root'));
 registerServiceWorker();
