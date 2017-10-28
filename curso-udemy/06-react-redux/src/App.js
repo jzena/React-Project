@@ -13,7 +13,11 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <p className="App-intro">
-          {this.props.informacion} ....
+          {this.props.informacion}
+          <br />
+          <button onClick={this.props.aumentar}>Aumentar</button>
+          <button onClick={this.props.disminuir}>Disminuir</button>
+          <br />        
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
       </div>
@@ -26,6 +30,7 @@ class App extends Component {
 // internamente hace una subscripción y un getstate
 // por lo que constantemente en caso de un cambio en el STATE se actualiza
 // o se ejecuta nuevamente
+// este es una función mapStateToProps 
 const mapStateToProps = (state) => {
   // return de un objeto javascript
   return {
@@ -33,9 +38,21 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = {
-  aumentar: () => { return { type: "AUM" } },
-  disminuir: () => { return { type: "DIS" } }
+// mapDispatchToProps puede ser un objeto, que asume que las funciones internas son ACTION CREATOR
+// y que al ingresarlas a nuestro component las engloba en dispatch para que
+// de esta forma puedan ser llamadas como un dispatch
+// const mapDispatchToProps = {
+//   aumentar: () => { return { type: "AUM" } },
+//   disminuir: () => { return { type: "DIS" } }
+// }
+
+// mapDispatchToProps puede ser también una funcion que tiene disponible
+// el dispatch y por lo tanto podemos ejecutarlo dentro de nuestras funciones
+const mapDispatchToProps = (dispatch) => {
+  return {
+    aumentar: () => { dispatch({ type: "AUM" }) },
+    disminuir: () => { dispatch({ type: "DIS" }) }
+  }
 }
 
 // connect nos permite acceder al STATE y hacer DISPATCH de ACTIONS
