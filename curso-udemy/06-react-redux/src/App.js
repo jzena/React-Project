@@ -4,22 +4,52 @@ import './App.css';
 
 import { connect } from 'react-redux';
 
+
 class App extends Component {
+  constructor() {
+    super();
+    this.agregarTarea = this.agregarTarea.bind(this);
+    this.eliminarTarea = this.eliminarTarea.bind(this);
+
+  }
+
+  agregarTarea = (evento) => {
+    if (evento.which === 13) {
+      console.log(evento.target.value);
+      var tarea = evento.target.value;
+      this.props.agregar(tarea, this.props.id);
+      evento.target.value = "";
+    }
+  }
+
+  eliminarTarea = (index) => {
+    console.log(index);
+    this.props.eliminar(index);
+  }
+
   render() {
+    const elementosTareas = this.props.tareas.map((tarea) => {
+      return <h2 key={tarea.id} onClick={()=> {this.eliminarTarea(tarea.id)}}>{tarea.tarea}</h2>
+    });
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <p className="App-intro">
+        <div className="App-intro">
           {this.props.informacion}
           <br />
           <button onClick={this.props.aumentar}>Aumentar</button>
           <button onClick={this.props.disminuir}>Disminuir</button>
-          <br />        
+          <br />
+          Tarea:<input onKeyPress={this.agregarTarea} />
+          <br />
+          
+          {elementosTareas}
+          <br />
           To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        </div>
       </div>
     );
   }
@@ -34,7 +64,10 @@ class App extends Component {
 const mapStateToProps = (state) => {
   // return de un objeto javascript
   return {
-    informacion: state.cantidad
+    // informacion: state.cantidad
+    informacion: state.numero,
+    tareas: state.tareas,
+    id: state.id
   }
 }
 
@@ -50,8 +83,21 @@ const mapStateToProps = (state) => {
 // el dispatch y por lo tanto podemos ejecutarlo dentro de nuestras funciones
 const mapDispatchToProps = (dispatch) => {
   return {
-    aumentar: () => { dispatch({ type: "AUM" }) },
-    disminuir: () => { dispatch({ type: "DIS" }) }
+    // Dispatch aplicando middleware con redux-thunk
+    aumentar: () => { dispatch((dispatch)=>{
+      setTimeout(()=>{
+        return dispatch({ type: "AUM" })
+      },3000);
+      }
+    )},
+    disminuir: () => { 
+      setTimeout(()=>{
+        dispatch({ type: "DIS" }) 
+      },5000);
+    },
+    // disminuir: () => { dispatch({ type: "DIS" }) },
+    agregar: (tarea, id) => { dispatch({ type: "ADD", tarea, id }) },
+    eliminar: (id) => { dispatch({ type: "DEL", id }) }
   }
 }
 
