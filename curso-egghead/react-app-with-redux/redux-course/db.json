@@ -1,0 +1,49 @@
+{
+  "todos": [
+    {
+      "id": 1,
+      "name": "Figure server",
+      "isCompleted": true
+    },
+    {
+      "id": 2,
+      "name": "start server",
+      "isCompleted": true
+    },
+    {
+      "id": 3,
+      "name": "Load data into app",
+      "isCompleted": true
+    },
+    {
+      "id": 4,
+      "name": "Add records",
+      "isCompleted": true
+    },
+    {
+      "id": 5,
+      "name": "update records",
+      "isCompleted": false
+    },
+    {
+      "name": "new todo",
+      "isCompleted": false,
+      "id": 6
+    },
+    {
+      "name": "last todo",
+      "isCompleted": false,
+      "id": 7
+    },
+    {
+      "name": "todo message",
+      "isCompleted": false,
+      "id": 8
+    },
+    {
+      "name": "new last message",
+      "isCompleted": false,
+      "id": 9
+    }
+  ]
+}

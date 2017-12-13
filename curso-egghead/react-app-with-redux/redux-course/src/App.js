@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 import TodoForm from './components/TodoForm';
 import TodoList from './components/TodoList';
+import Message from './components/Message';
+import Footer from './components/Footer';
 
 class App extends Component {
   render() {
@@ -12,15 +15,23 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React with Redux</h1>
         </div>
-        <div className="Todo-App">
-          <TodoForm
-            changeCurrent={this.props.changeCurrent}
-            currentTodo={this.props.currentTodo} />
-          <TodoList todos={this.props.todos} />
-        </div>
+        <Router>
+          <div className="Todo-App">
+            <Message />
+            <TodoForm />
+            <Route path='/:filter?' render={({ match }) => (
+              <TodoList filter={match.params.filter} />
+            )} />
+            <Footer />
+          </div>
+        </Router>
       </div>
     );
   }
 }
 
+// const mapStateToProps = (state) => state;
+// const mapDispatchToProps = { updateCurrent }
+// const connectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
+// export default connectedApp;
 export default App;
